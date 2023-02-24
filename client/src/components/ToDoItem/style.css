@@ -10,6 +10,7 @@
     position: relative;
     height: 50px;
     width: 50px;
+    min-width: 50px;
     margin-right: 30px;
     display: flex;
     cursor: pointer;
@@ -74,11 +75,15 @@
 .checkbox-button__control {
   transform: scale(0.75);
 }
-
+.completed-item .to-do-item p{
+    text-decoration: line-through;
+    opacity: .75;
+}
 .to-do-item{
     background-color: #46b7d7;
     padding: 30px;
     border-radius: 10px;
+    width: 100%;
     box-shadow: inset 11px 11px 23px #3c9cb7,
             inset -11px -11px 23px #51d2f7;
 
@@ -109,10 +114,15 @@
    transform-origin: center;
 }
 
+.update-to-do svg{
+    width: 80%;
+    height: 80%;
+}
 
-.delete-to-do{
+.delete-to-do, .update-to-do{
     height: 50px;
     width: 50px;
+    min-width: 50px;
     margin-left: 30px;
     display: flex;
     cursor: pointer;
@@ -127,7 +137,7 @@
              
 }
 
-.delete-to-do:hover{
+.delete-to-do:hover, .update-to-do:hover{
     background: linear-gradient(145deg, #3fa5c2, #4bc4e6);
     box-shadow:  5px 5px 9px #3c9cb7,
              -5px -5px 9px #51d2f7;

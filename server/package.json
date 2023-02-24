@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "To Do list with Mongoose & React",
   "main": "server.js",
-  "type": "module",
   "engines": {
     "npm": ">=8.0.0 <9.0.0",
     "node": ">=16.0.0 <17.0.0"
@@ -16,7 +15,7 @@
   "author": "Rhys Clark",
   "license": "ISC",
   "dependencies": {
-    "body-parser": "^1.20.1",
+    "body-parser": "^1.20.2",
     "dot-env": "^0.0.1",
     "express": "^4.18.2",
     "mongoose": "^6.9.0"

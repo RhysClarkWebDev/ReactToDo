@@ -7,6 +7,7 @@ module.exports = {
       alias: {
         "@/Components": path.resolve(__dirname, 'src/components/'),
         "@/Layout": path.resolve(__dirname, 'src/layout/'),
+        "@/API": path.resolve(__dirname, 'src/api/'),
       },
       
       extensions: [".wasm", ".ts", ".tsx", "jsx", ".mjs", ".cjs", ".js", ".json"],
@@ -30,7 +31,7 @@ module.exports = {
       static: path.join(__dirname, 'dist'),
 
       proxy: {
-        '/server': {
+        '/api': {
           target: 'http://localhost:8080',
           router: () => 'http://localhost:5000',
           logLevel: 'debug' /*optional*/

@@ -1,25 +1,26 @@
-import React from "react";
+import React, {useCallback, useState} from "react";
 import ReactDOM from "react-dom";
 
 import './style.css';
 
 import ToDoItem from "@/Components/ToDoItem/ToDoItem";
+import NewToDoItem from "@/Components/NewToDoItem/NewToDoItem";
 
 
-
-
+interface a {
+    allToDoItems: any;
+}
 interface ToDoItemType {
-    id: number;
+    _id: string;
     text: string;
+    complete: boolean;
 }
 
-let list: Array<ToDoItemType> = [{id: 1, text: "Go to the shop"}, {id: 2, text: "Make Tea"}, {id: 3, text: "Go for Job Interview"}];
+function ToDoLayout(props:a): React.ReactElement{
 
+    const [todos, setToDos] = useState(JSON.parse(props.allToDoItems));
 
-function ToDoLayout(): React.ReactElement{
-
-
-    function getDay(): string {
+    function getDay():string {
         switch(new Date().getDay()){
             case 0: return "Sunday";
 
@@ -38,6 +39,13 @@ function ToDoLayout(): React.ReactElement{
         
 
     }
+
+    function handleCallback(childData:object){
+        setToDos([
+            ...todos, childData
+        ])
+    }
+    
     
     return (
         <>  
@@ -47,17 +55,18 @@ function ToDoLayout(): React.ReactElement{
                         <h1>TO DO LIST</h1>
                         <p>Today is: {getDay()}</p>
                     </div>
-                <p></p>
 
-                {list.map((item)=> {
+                {todos.map((item:ToDoItemType)=> {
                     return (
-                        <>
-                        <ToDoItem props={item}/>
-                        </>
+                        <div key={item._id}>
+                            <ToDoItem props={item}/>
+                        </div>
                     )
                 })
 
                 }
+
+                <NewToDoItem parentCallback={handleCallback}/>
                 </div>
             </div>
             

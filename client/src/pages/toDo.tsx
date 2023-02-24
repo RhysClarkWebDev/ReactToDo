@@ -3,10 +3,33 @@ import ReactDOM from "react-dom";
 
 import ToDoLayout from "@/Layout/ToDoLayout/ToDoLayout";
 
+import GetToDoItems from "@/API/GetToDoItems"
 
 
 
-let root = document.getElementById("root");
+function getallToDoItems(){
+    return new Promise((resolve, reject) => {
+        GetToDoItems().then((data:string)=>{
+            resolve(data);
+        });
+        
+    })
+}
 
-ReactDOM.render(<ToDoLayout props={"Rhys"}/>, root);
+getallToDoItems().then((data)=>{
+    let root = document.getElementById("root");
+    ReactDOM.render(<ToDoLayout allToDoItems={data}/>, root);
+})
+
+
+
+
+
+
+
+
+
+
+
+
 
