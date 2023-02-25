@@ -17,7 +17,7 @@ body{
 }
 
 .to-do{
-    margin-top: 100px;
+    margin: 100px auto;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -49,3 +49,4 @@ body{
     text-align: center;
     color: white;
 }
+

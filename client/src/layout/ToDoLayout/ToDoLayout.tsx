@@ -1,14 +1,15 @@
-import React, {useCallback, useState} from "react";
+import React, {useCallback, useState, useEffect} from "react";
 import ReactDOM from "react-dom";
 
 import './style.css';
 
 import ToDoItem from "@/Components/ToDoItem/ToDoItem";
+import ToDoItemMobile from "@/Components/ToDoItemMobile/ToDoItemMobile";
 import NewToDoItem from "@/Components/NewToDoItem/NewToDoItem";
 
 
 interface a {
-    allToDoItems: any;
+    allToDoItems: string;
 }
 interface ToDoItemType {
     _id: string;
@@ -19,6 +20,9 @@ interface ToDoItemType {
 function ToDoLayout(props:a): React.ReactElement{
 
     const [todos, setToDos] = useState(JSON.parse(props.allToDoItems));
+    const [forDesktop, setForDesktop] = useState(true);
+
+    useEffect(getDisplayWidth);
 
     function getDay():string {
         switch(new Date().getDay()){
@@ -40,38 +44,78 @@ function ToDoLayout(props:a): React.ReactElement{
 
     }
 
+    function getDisplayWidth(){
+        let width = screen.width;
+        console.log(width)
+        if(width < 670){
+            setForDesktop(false);
+        } else{
+            setForDesktop(true);
+        }
+    }
+
+    window.addEventListener('resize', getDisplayWidth);
+
     function handleCallback(childData:object){
         setToDos([
             ...todos, childData
         ])
     }
     
-    
-    return (
-        <>  
-            <div className="to-do">
-                <div className="to-do-inner">
-                    <div className="to-do-top">
-                        <h1>TO DO LIST</h1>
-                        <p>Today is: {getDay()}</p>
-                    </div>
-
-                {todos.map((item:ToDoItemType)=> {
-                    return (
-                        <div key={item._id}>
-                            <ToDoItem props={item}/>
+    if(forDesktop){
+        return (
+            <>  
+                <div className="to-do">
+                    <div className="to-do-inner">
+                        <div className="to-do-top">
+                            <h1>TO DO LIST</h1>
+                            <p>Today is: {getDay()}</p>
                         </div>
-                    )
-                })
-
-                }
-
-                <NewToDoItem parentCallback={handleCallback}/>
+    
+                    {todos.map((item:ToDoItemType)=> {
+                        return (
+                            <div key={item._id}>
+                                <ToDoItem props={item}/>
+                            </div>
+                        )
+                    })
+    
+                    }
+    
+                    <NewToDoItem parentCallback={handleCallback}/>
+                    </div>
                 </div>
-            </div>
-            
-        </>
-    )
+                
+            </>
+        )
+    } else if (!forDesktop){
+        return (
+            <>  
+                <div className="to-do mobile-to-do">
+                    <div className="to-do-inner">
+                        <div className="to-do-top">
+                            <h1>TO DO LIST</h1>
+                            <p>Today is: {getDay()}</p>
+                        </div>
+    
+                    {todos.map((item:ToDoItemType)=> {
+                        return (
+                            <div key={item._id}>
+                                <ToDoItemMobile props={item}/>
+                            </div>
+                        )
+                    })
+    
+                    }
+    
+                    <NewToDoItem parentCallback={handleCallback}/>
+                    </div>
+                </div>
+                
+            </>
+        )
+    }
+    
 }
 
 export default ToDoLayout;

@@ -1,17 +1,18 @@
-.to-do-item-holder{
+.mobile-to-do .to-do-item-holder{
     display: flex;
+    flex-direction: column;
     align-items: center;
-    margin-bottom: 30px;
+    margin-bottom: 5px;
     width: 100%;
     justify-content: space-between;
 }
 
-.complete-to-do{
+.editables-container .complete-to-do{
     position: relative;
     height: 50px;
     width: 50px;
     min-width: 50px;
-    margin-right: 30px;
+    margin-right: 0px;
     display: flex;
     cursor: pointer;
     align-items: center;
@@ -79,9 +80,10 @@
     text-decoration: line-through;
     opacity: .75;
 }
-.to-do-item{
+.mobile-to-do .to-do-item{
     background-color: #46b7d7;
     padding: 30px;
+    box-sizing: border-box;
     border-radius: 10px;
     width: 100%;
     box-shadow: inset 11px 11px 23px #3c9cb7,
@@ -95,6 +97,7 @@
     font-size: 20px;
     border: none;
     outline: none;
+    width: 100%;
 }
 
 .to-do-item p{
@@ -131,7 +134,6 @@
     height: 50px;
     width: 50px;
     min-width: 50px;
-    margin-left: 30px;
     display: flex;
     cursor: pointer;
     align-items: center;
@@ -151,12 +153,14 @@
              -5px -5px 9px #51d2f7;
 }
 
-.save-to-do{
+.mobile-to-do .save-to-do{
     color: white;
     height: 50px;
     width: 120px;
     min-width: 50px;
-    margin-left: 30px;
+    margin-left: 0px;
+    margin-top: 30px;
+    margin-bottom: 30px;
     display: flex;
     cursor: pointer;
     align-items: center;
@@ -175,3 +179,54 @@
 
 
 
+
+
+
+
+.editables-container{
+    height: 50px;
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow:hidden;
+    width: 100%;
+}
+
+.show-editables{
+    height: max-content;
+}
+.toggle-edits{
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    height: 30px;
+    width: 80px;
+    margin: 15px 0px 25px 0px;
+    background: #46b7d7;
+    border-radius: 20px;
+    box-shadow:  5px 5px 9px #3c9cb7,
+             -5px -5px 9px #51d2f7;
+}
+.toggle-edits:hover{
+    background: linear-gradient(145deg, #3fa5c2, #4bc4e6);
+}
+.toggle-edits p{
+    text-align: center;
+    color: white;
+}
+.editables-buttons{
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 30px;
+}
+
+
+
+@media only screen and (max-width: 460px){
+    .to-do-inner{
+        padding: 30px;
+    }
+
+}

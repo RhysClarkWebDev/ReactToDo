@@ -3,9 +3,15 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    width: 100%;
+}
+
+.new-to-do-item-input{
+    width: 75%;
 }
 .new-to-do-item input{
     height: 50px;
+    width: 100%;
     box-sizing: border-box;
     padding-left: 30px;
     font-size: 18px;
@@ -31,4 +37,22 @@
 
 .add-new-to-do-item:hover{
     background: linear-gradient(145deg, #3fa5c2, #4bc4e6);
+}
+
+
+@media only screen and (max-width: 460px){
+    .new-to-do-item{
+        width: 100%;
+        margin: 30px auto 0 auto;
+        flex-direction: column;
+    }
+    .new-to-do-item-input{
+        width: 100%;
+    }
+    .new-to-do-item input{
+        width: 100%;
+    }
+    .add-new-to-do-item{
+        margin-top: 30px;
+    }
 }
