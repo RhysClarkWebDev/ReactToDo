@@ -1,15 +1,21 @@
 const express = require("express");
 const app = express();
-const port = 5000;
+const path = require("path");
 const mongoose = require('mongoose');
 const bodyParser = require("body-parser");
+require('dotenv').config();
+
+const port = process.env.PORT;
 
 const toDoRoutes = require('./Routes/todo');
+
+const frontEnd = path.join(__dirname, '..', 'client', 'dist');
 
 
 mongoose.set('strictQuery', true);
 
-app.use(express.static(__dirname + "/public"));
+
+app.use(express.static(frontEnd));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.json())
 
@@ -23,14 +29,14 @@ app.use('/api/toDoItems', toDoRoutes);
 
 
 async function main(){
-    await mongoose.connect('mongodb://localhost:27017/toDoItems');
+    await mongoose.connect(process.env.MONGO_SERVER);
 }
 main().catch(err => console.log(err));
 
 
 
 app.get("/", (req, res) => {
-    res.sendFile(__dirname + "/index.html");
+    res.sendFile(frontEnd + "/index.html");
 })
 
 

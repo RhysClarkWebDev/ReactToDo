@@ -15,7 +15,7 @@ async function UpdateToDoItem(id:string, text:string){
     }).catch((error) => {
         return error;
     });
-    console.log(response.complete);
+
     return response;
 
 }

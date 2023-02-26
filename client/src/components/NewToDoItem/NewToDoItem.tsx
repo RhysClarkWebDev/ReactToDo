@@ -12,13 +12,19 @@ interface ParentCallback{
 function NewToDoItem(props:ParentCallback):React.ReactElement {
 
     const [message, setMessage] = useState("")
+    const [showError, setShowError] = useState("");
 
     async function addItem(){
         let text:string = (document.getElementById("next-to-do") as HTMLInputElement).value;
 
-        let response = await CreateToDoItem(text);
-        props.parentCallback(response);
-        setMessage("");
+        if (text == ""){
+            setShowError("Please enter Text");
+        }else{
+            let response = await CreateToDoItem(text);
+            props.parentCallback(response);
+            setMessage("");
+            setShowError("");
+        }
     }
 
     function handleChange(event:any){
@@ -26,7 +32,7 @@ function NewToDoItem(props:ParentCallback):React.ReactElement {
     }
 
     return (
-        <>
+        <>    
             <div className="new-to-do-item">
                 <div className="new-to-do-item-input">
                     <input type="text" id="next-to-do" placeholder="New To Do Item..." onChange={handleChange} value={message}/>
@@ -35,6 +41,7 @@ function NewToDoItem(props:ParentCallback):React.ReactElement {
                     <p>ADD</p>
                 </div>
             </div>
+            <p className="error" style={showError ? {display:"block"} : {display: "none"}}>Please enter some Text</p>
         </>
     )
 }

@@ -50,9 +50,11 @@ function ToDoItem({props}:SingleToDoItem): React.ReactElement{
 
     async function updateToDo(){
         await UpdateToDoItem(String(databaseId.current), message)
-        .then(()=>{
+        .then((response)=>{
             setBeingEdited(false);
+            setMessage(response.text)
         })
+        
     }
 
     function handleChange(event:any){

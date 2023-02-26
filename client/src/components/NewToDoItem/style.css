@@ -39,6 +39,11 @@
     background: linear-gradient(145deg, #3fa5c2, #4bc4e6);
 }
 
+.error{
+    margin-top: 15px;
+}
+
+
 
 @media only screen and (max-width: 460px){
     .new-to-do-item{

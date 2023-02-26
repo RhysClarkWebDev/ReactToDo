@@ -6,7 +6,6 @@ const getAllToDoItems = async (req, res) => {
         if (err) {
             console.log(err);
           } else {
-            console.log(items);
             res.status(200).json(items);
           }
     });
@@ -16,7 +15,7 @@ const getAllToDoItems = async (req, res) => {
 
 //Create a new To Do Item
 const createToDo = async(req, res) =>{
-    const text = req.body.text;
+    const text = (req.body.text).replace(/[^A-Za-z0-9\s!?]/g,'');
     const complete = false;
 
 
@@ -30,11 +29,10 @@ const createToDo = async(req, res) =>{
 
 //Update a To Do Item
 const updateToDo = async(req, res) => {
-    console.log(req.body);
     let id = req.body.id;
-    let text = req.body.text;
+    let text = (req.body.text).replace(/[^A-Za-z0-9\s!?]/g,'')
 
-    let complete = await ToDoItem.findOneAndUpdate({"_id": id}, {"text": text});
+    let complete = await ToDoItem.findOneAndUpdate({"_id": id}, {"text": text}, {new: true});
     if(!complete){
         res.status(400).json({error: error.message})
     } else {
