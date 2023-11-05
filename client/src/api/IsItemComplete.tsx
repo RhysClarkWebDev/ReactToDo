@@ -1,24 +1,24 @@
-import axios from "axios";
+import axios from 'axios'
 
-async function IsItemComplete(id:string, complete:boolean){
-    let response = await axios({
+async function IsItemComplete (id: string, complete: boolean): Promise<unknown> {
+    const response = await axios({
         method: 'patch',
         url: '/api/toDoItems/status',
         data: {
-            'id':id,
-            'complete': complete
+            id,
+            complete
         }
     })
-    
-    .then((response) => {
-        return response.data;
-    }).catch((error) => {
-        return error;
-    });
-    console.log(response.complete);
-    return response;
 
+        .then((response) => {
+            return response.data
+        }).catch((error) => {
+            return error
+        })
+
+
+    return response
 }
 
-export default IsItemComplete;
+export default IsItemComplete
 

@@ -1,121 +1,148 @@
-import React, {useCallback, useState, useEffect} from "react";
-import ReactDOM from "react-dom";
+import React, { useState, useEffect } from 'react'
 
-import './style.css';
+import './style.css'
 
-import ToDoItem from "@/Components/ToDoItem/ToDoItem";
-import ToDoItemMobile from "@/Components/ToDoItemMobile/ToDoItemMobile";
-import NewToDoItem from "@/Components/NewToDoItem/NewToDoItem";
+import GetToDoItems from '@/API/GetToDoItems'
+import ToDoItem from '@/Components/ToDoItem/ToDoItem'
+import ToDoItemMobile from '@/Components/ToDoItemMobile/ToDoItemMobile'
+import NewToDoItem from '@/Components/NewToDoItem/NewToDoItem'
 
 
-interface a {
-    allToDoItems: string;
-}
+
 interface ToDoItemType {
-    _id: string;
-    text: string;
-    complete: boolean;
+    _id: string
+    text: string
+    complete: boolean
 }
 
-function ToDoLayout(props:a): React.ReactElement{
+function ToDoLayout (): React.ReactElement {
+    const [todos, setToDos] = useState<ToDoItemType[]>([])
+    const [forDesktop, setForDesktop] = useState(true)
 
-    const [todos, setToDos] = useState(JSON.parse(props.allToDoItems));
-    const [forDesktop, setForDesktop] = useState(true);
 
-    useEffect(getDisplayWidth);
+    useEffect(() => {
+        const fetchData = async (): Promise<string> => {
+            let data = ''
 
-    function getDay():string {
-        switch(new Date().getDay()){
-            case 0: return "Sunday";
+            try {
+                data = await GetToDoItems()
 
-            case 1: return "Monday";
+                return data
+            } catch (error) {
+            // Handle any errors here
+            }
 
-            case 2: return "Tuesday";
-
-            case 3: return "Wednesday";
-
-            case 4: return "Thursday";
-
-            case 5: return "Friday";
-
-            case 6: return "Saturday";
+            return data
         }
-        
 
+        fetchData()
+            .then((result) => {
+                if (result !== '') {
+                    setToDos(JSON.parse(result))
+                }
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }, [])
+
+
+
+    useEffect(() => {
+        getDisplayWidth()
+    })
+
+    function getDay (): string {
+        switch (new Date().getDay()) {
+            case 0: return 'Sunday'
+
+            case 1: return 'Monday'
+
+            case 2: return 'Tuesday'
+
+            case 3: return 'Wednesday'
+
+            case 4: return 'Thursday'
+
+            case 5: return 'Friday'
+
+            case 6: return 'Saturday'
+
+            default: return 'Unknown'
+        }
     }
 
-    function getDisplayWidth(){
-        let width = screen.width;
-        console.log(width)
-        if(width < 670){
-            setForDesktop(false);
-        } else{
-            setForDesktop(true);
+    function getDisplayWidth (): void {
+        const width = screen.width
+
+        if (width < 670) {
+            setForDesktop(false)
+        } else {
+            setForDesktop(true)
         }
     }
 
-    window.addEventListener('resize', getDisplayWidth);
+    window.addEventListener('resize', getDisplayWidth)
 
-    function handleCallback(childData:object){
+    function handleCallback (childData: ToDoItemType): void {
         setToDos([
             ...todos, childData
         ])
     }
-    
-    if(forDesktop){
+
+    if (forDesktop && todos !== null && todos !== undefined) {
         return (
-            <>  
+            <>
                 <div className="to-do">
                     <div className="to-do-inner">
                         <div className="to-do-top">
                             <h1>TO DO LIST</h1>
                             <p>Today is: {getDay()}</p>
                         </div>
-    
-                    {todos.map((item:ToDoItemType)=> {
-                        return (
-                            <div key={item._id}>
-                                <ToDoItem props={item}/>
-                            </div>
-                        )
-                    })
-    
-                    }
-    
-                    <NewToDoItem parentCallback={handleCallback}/>
+
+                        {Array.isArray(todos) && todos.map((item: ToDoItemType) => {
+                            return (
+                                <div key={item._id}>
+                                    <ToDoItem props={item}/>
+                                </div>
+                            )
+                        })
+
+                        }
+
+                        <NewToDoItem parentCallback={handleCallback}/>
                     </div>
                 </div>
-                
+
             </>
         )
-    } else if (!forDesktop){
-        return (
-            <>  
-                <div className="to-do mobile-to-do">
-                    <div className="to-do-inner">
-                        <div className="to-do-top">
-                            <h1>TO DO LIST</h1>
-                            <p>Today is: {getDay()}</p>
-                        </div>
-    
-                    {todos.map((item:ToDoItemType)=> {
+    }
+
+    return (
+        <>
+            <div className="to-do mobile-to-do">
+                <div className="to-do-inner">
+                    <div className="to-do-top">
+                        <h1>TO DO LIST</h1>
+                        <p>Today is: {getDay()}</p>
+                    </div>
+
+                    {Array.isArray(todos) && todos.map((item: ToDoItemType) => {
                         return (
                             <div key={item._id}>
                                 <ToDoItemMobile props={item}/>
                             </div>
                         )
                     })
-    
+
                     }
-    
+
                     <NewToDoItem parentCallback={handleCallback}/>
-                    </div>
                 </div>
-                
-            </>
-        )
-    }
-    
+            </div>
+
+        </>
+    )
 }
 
-export default ToDoLayout;
+export default ToDoLayout

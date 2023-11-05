@@ -1,34 +1,19 @@
-import React from "react";
-import ReactDOM from "react-dom";
+import React from 'react'
+import { createRoot } from 'react-dom/client'
 
-import ToDoLayout from "@/Layout/ToDoLayout/ToDoLayout";
+import ToDoLayout from '@/Layout/ToDoLayout/ToDoLayout'
 
-import GetToDoItems from "@/API/GetToDoItems"
+const rootElement = document.getElementById('root')
 
+if (rootElement !== null) {
+    const root = createRoot(rootElement)
 
-
-function getallToDoItems(){
-    return new Promise((resolve, reject) => {
-        GetToDoItems().then((data:string)=>{
-            resolve(data);
-        });
-        
-    })
+    root.render(
+        <ToDoLayout />
+    )
+} else {
+    console.error('Element with ID "root" not found.')
 }
-
-getallToDoItems().then((data)=>{
-    let root = document.getElementById("root");
-    ReactDOM.render(<ToDoLayout allToDoItems={data}/>, root);
-})
-
-
-
-
-
-
-
-
-
 
 
 

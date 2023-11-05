@@ -1,22 +1,22 @@
-import axios from "axios";
+import axios from 'axios'
 
-async function CreateToDoItem(text:string){
-    let response = await axios({
+async function CreateToDoItem (text: string): Promise<unknown> {
+    const response = await axios({
         method: 'post',
         url: '/api/toDoItems',
         data: {
-            'text': text
+            text
         }
     })
-    
-    .then((response) => {
-        return response.data;
-    }).catch((error) => {
-        return error;
-    });
 
-    return response;
+        .then((response) => {
+            return response.data
+        }).catch((error) => {
+            return error
+        })
+
+    return response
 }
 
-export default CreateToDoItem;
+export default CreateToDoItem
 

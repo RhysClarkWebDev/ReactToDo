@@ -1,21 +1,22 @@
-import axios from "axios";
+import axios from 'axios'
 
-async function DeleteToDoItem(id:string){
-    await axios({
+async function DeleteToDoItem (id: string): Promise<unknown> {
+    const response = await axios({
         method: 'delete',
         url: '/api/toDoItems',
         data: {
-            'id': id
+            id
         }
     })
-    
-    .then((response) => {
-        return response.data;
-    }).catch((error) => {
-        return error;
-    });
 
+        .then((response) => {
+            return response.data
+        }).catch((error) => {
+            return error
+        })
+
+    return response
 }
 
-export default DeleteToDoItem;
+export default DeleteToDoItem
 

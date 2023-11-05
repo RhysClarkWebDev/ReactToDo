@@ -1,24 +1,23 @@
-import axios from "axios";
+import axios from 'axios'
 
-async function UpdateToDoItem(id:string, text:string){
-    let response = await axios({
+async function UpdateToDoItem (id: string, text: string): Promise<unknown> {
+    const response = await axios({
         method: 'patch',
         url: '/api/toDoItems',
         data: {
-            'id':id,
-            'text': text
+            id,
+            text
         }
     })
-    
-    .then((response) => {
-        return response.data;
-    }).catch((error) => {
-        return error;
-    });
 
-    return response;
+        .then((response) => {
+            return response.data
+        }).catch((error) => {
+            return error
+        })
 
+    return response
 }
 
-export default UpdateToDoItem;
+export default UpdateToDoItem
 
