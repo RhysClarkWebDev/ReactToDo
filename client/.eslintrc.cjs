@@ -17,7 +17,12 @@ module.exports = {
     },
     ignorePatterns: [
         'dist',
-        'client/webpack.common.cjs',
+        'webpack.common.cjs',
+        "webpack.prod.cjs",
+        "webpack.dev.cjs",
+        'jest.config.cjs',
+        'jest.setup.cjs',
+        'CSSStub.cjs',
         '.eslintrc.cjs'
     ],
     plugins: [

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 
 import './style.css'
 
@@ -11,15 +11,16 @@ interface ParentCallback {
 function NewToDoItem (props: ParentCallback): React.ReactElement {
     const [message, setMessage] = useState('')
     const [showError, setShowError] = useState('')
+    const textRef = useRef<HTMLInputElement>()
 
 
     async function addItem (): Promise<void> {
-        const text: string = (document.getElementById('next-to-do') as HTMLInputElement).value
+        const text = textRef.current?.value
 
         if (text === '') {
             setShowError('Please enter Text')
         } else {
-            const response = await CreateToDoItem(text) as object
+            const response = text !== null && await CreateToDoItem(text) as object
             props.parentCallback(response)
             setMessage('')
             setShowError('')
@@ -40,6 +41,7 @@ function NewToDoItem (props: ParentCallback): React.ReactElement {
                         placeholder="New To Do Item..."
                         onChange={handleChange}
                         value={message}
+                        ref={textRef}
                     />
                 </div>
                 <div className="add-new-to-do-item" onClick={() => { void addItem() }}>

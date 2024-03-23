@@ -11,6 +11,7 @@ module.exports = {
       },
       
       extensions: [".wasm", ".ts", ".tsx", "jsx", ".mjs", ".cjs", ".js", ".json"],
+
    },
 
    //Left is OUTPUT -- Right is INPUT
